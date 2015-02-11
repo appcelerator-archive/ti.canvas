@@ -139,6 +139,22 @@ if ([value isEqualToString:@#a])\
 	BLEND_MODE(source-out,kCGBlendModeSourceOut);
 	BLEND_MODE(source-over,kCGBlendModeNormal);
 	BLEND_MODE(xor,kCGBlendModeXOR);
+
+	BLEND_MODE(overlay,kCGBlendModeOverlay);
+	BLEND_MODE(multiply,kCGBlendModeMultiply);
+	BLEND_MODE(screen,kCGBlendModeScreen);
+	BLEND_MODE(darken,kCGBlendModeDarken);
+	BLEND_MODE(dodge,kCGBlendModeColorDodge);
+	BLEND_MODE(burn,kCGBlendModeColorBurn);
+	BLEND_MODE(difference,kCGBlendModeDifference);
+	BLEND_MODE(exclusion,kCGBlendModeExclusion);
+	BLEND_MODE(hue,kCGBlendModeHue);
+	BLEND_MODE(softlight,kCGBlendModeSoftLight);
+	BLEND_MODE(hardlight,kCGBlendModeHardLight);
+	BLEND_MODE(dodge,kCGBlendModeColorDodge);
+	BLEND_MODE(darker,kCGBlendModePlusDarker);
+	BLEND_MODE(lighter,kCGBlendModePlusLighter);
+
 	return kCGBlendModeNormal; //default by HTML canvas spec
 }
 
