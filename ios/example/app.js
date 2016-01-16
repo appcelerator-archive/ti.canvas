@@ -38,7 +38,7 @@ win.addEventListener('open', function () {
     canvas.bezierCurveTo(60, 220, 80, 200, 80, 220);
 
     // Images
-    canvas.drawImage(20, 300, 50, 50, Ti.Filesystem.getFile('default_app_logo.png'));
+    canvas.drawImage(20, 300, 50, 50, 'default_app_logo.png');
 
     canvas.stroke();
     canvas.commit();
