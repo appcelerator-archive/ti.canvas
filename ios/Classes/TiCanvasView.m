@@ -10,7 +10,7 @@
 #import "TiUtils.h"
 #import "Webcolor.h"
 
-enum  
+enum
 {
 	TiCanvasFillStyle = 0,
 	TiCanvasFillRect,
@@ -74,27 +74,27 @@ enum
 -(CGRect)rectFromArray:(NSArray*)args
 {
 	assert([args count]>=4);
-	return CGRectMake([TiUtils floatValue:[args objectAtIndex:0]], 
-					  [TiUtils floatValue:[args objectAtIndex:1]], 
-					  [TiUtils floatValue:[args objectAtIndex:2]], 
+	return CGRectMake([TiUtils floatValue:[args objectAtIndex:0]],
+					  [TiUtils floatValue:[args objectAtIndex:1]],
+					  [TiUtils floatValue:[args objectAtIndex:2]],
 					  [TiUtils floatValue:[args objectAtIndex:3]]);
 }
 
 -(CGPoint)pointFromArray:(NSArray*)args
 {
 	assert([args count]>=2);
-	return CGPointMake([TiUtils floatValue:[args objectAtIndex:0]], 
+	return CGPointMake([TiUtils floatValue:[args objectAtIndex:0]],
 					  [TiUtils floatValue:[args objectAtIndex:1]]);
 }
 
 -(CGSize)sizeFromArray:(NSArray*)args
 {
 	assert([args count]>=2);
-	return CGSizeMake([TiUtils floatValue:[args objectAtIndex:0]], 
+	return CGSizeMake([TiUtils floatValue:[args objectAtIndex:0]],
 					   [TiUtils floatValue:[args objectAtIndex:1]]);
 }
 
--(CGLineJoin)lineJoinFromString:(NSString*)value 
+-(CGLineJoin)lineJoinFromString:(NSString*)value
 {
 	if ([value isEqualToString:@"miter"])
 	{
@@ -149,7 +149,7 @@ if ([value isEqualToString:@#a])\
 
 -(CGImageRef)toImage:(id)image
 {
-	if (image) 
+	if (image)
 	{
 		if ([image isKindOfClass:[TiViewProxy class]])
 		{
@@ -174,7 +174,7 @@ if ([value isEqualToString:@#a])\
 	CGRect b = [self bounds];
 
 	NSLog(@"[DEBUG] operation: %d, args: %@, size: %fx%f",operation,args,b.size.width,b.size.height);
-	
+
 	switch(operation)
 	{
 		case TiCanvasFillStyle:
@@ -326,7 +326,7 @@ if ([value isEqualToString:@#a])\
 		{
 			//TODO: how to do this in core graphics?
 			break;
-		}			
+		}
 		case TiCanvasFillText:
 		{
 			ENSURE_ARG_COUNT(args,3);
@@ -334,16 +334,16 @@ if ([value isEqualToString:@#a])\
 			NSString *text = [args objectAtIndex:0];
 			CGFloat x = [TiUtils floatValue:[args objectAtIndex:1]];
 			CGFloat y = [TiUtils floatValue:[args objectAtIndex:2]];
-			//TODO: max support
+            CGContextSetTextMatrix(context, CGAffineTransformMake(1.0,0.0, 0.0, -1.0, 0.0, 0.0));
+            //TODO: max support
 			CGContextShowTextAtPoint(context, x, y, [text UTF8String], [text length]);
 			break;
 		}
 		case TiCanvasDrawImage:
 		{
 			ENSURE_ARG_COUNT(args,5);
-			CGRect rect = [self rectFromArray:args];
-			CGImageRef image = [self toImage:[args objectAtIndex:4]];
-			CGContextDrawImage(context, rect, image);
+            UIImage *image = [UIImage imageNamed:([args objectAtIndex:4])];
+			[image drawInRect:CGRectMake([TiUtils floatValue:[args objectAtIndex:0]], [TiUtils floatValue:[args objectAtIndex:1]], [TiUtils floatValue:[args objectAtIndex:2]], [TiUtils floatValue:[args objectAtIndex:3]])];
 			break;
 		}
 	}
@@ -352,9 +352,9 @@ if ([value isEqualToString:@#a])\
 -(void)drawRect:(CGRect)rect
 {
 	CGContextRef ctx = UIGraphicsGetCurrentContext();
-	
+
 	CGContextClearRect(ctx, rect);
-	
+
 	for (NSArray *operation in operations)
 	{
 		int op = [TiUtils intValue:[operation objectAtIndex:0]];
